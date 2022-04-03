@@ -13,6 +13,9 @@ import bodyParser from "body-parser";
 
 const start = async () => {
   const app = express();
+  app.get("/", (req, res) => {
+    res.send("Wellcome To Pet Monitor Server");
+  });
 
   const apiKey = process.env.FIREBASE_API_KEY;
   const authDomain = process.env.FIREBASE_AUTH_DOMAIN;
