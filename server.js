@@ -1,15 +1,22 @@
-require("dotenv").config();
-import { ApolloServer } from "apollo-server-express";
+import { ApolloServer, gql } from "apollo-server-express";
 import express from "express";
-import { getDatabase } from "firebase/database";
-import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
-import { getAuth } from "firebase/auth";
-import { typeDefs, resolvers } from "./graphql";
-import DataSources from "./data_sources/index";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
 import { graphqlUploadExpress } from "graphql-upload";
 import bodyParser from "body-parser";
+
+// Construct a schema, using GraphQL schema language
+const typeDefs = gql`
+  type Query {
+    hello: String
+  }
+`;
+
+// Provide resolver functions for your schema fields
+const resolvers = {
+  Query: {
+    hello: () => "Hello from our GraphQL backend!",
+  },
+};
 
 const start = async () => {
   const app = express();
@@ -18,38 +25,10 @@ const start = async () => {
     res.send("Wellcome To Pet Monitor Server");
   });
 
-  const apiKey = process.env.FIREBASE_API_KEY;
-  const authDomain = process.env.FIREBASE_AUTH_DOMAIN;
-  const databaseURL = process.env.FIREBASE_DATABASE_URL;
-  const projectId = process.env.FIREBASE_PROJECT_ID;
-  const storageBucket = process.env.FIREBASE_STORAGE_BUCKET;
-
-  const firebase = initializeApp({
-    apiKey,
-    authDomain,
-    databaseURL,
-    projectId,
-    storageBucket,
-  });
-
-  const dataSources = new DataSources(
-    databaseURL,
-    getDatabase(firebase),
-    getStorage(firebase),
-    getAuth(firebase)
-  );
-
   const server = new ApolloServer({
     typeDefs,
     resolvers,
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
-    context: ({ req }) => {
-      return {
-        headers: req.headers,
-        firebase,
-      };
-    },
-    dataSources: () => dataSources.getAllSources(),
   });
 
   await server.start();
