@@ -1,8 +1,10 @@
-import { ApolloServer, gql } from "apollo-server-express";
-import express from "express";
-import { ApolloServerPluginLandingPageGraphQLPlayground } from "apollo-server-core";
-import { graphqlUploadExpress } from "graphql-upload";
-import bodyParser from "body-parser";
+const { ApolloServer, gql } = require("apollo-server-express");
+const express = require("express");
+const {
+  ApolloServerPluginLandingPageGraphQLPlayground,
+} = require("apollo-server-core");
+const { graphqlUploadExpress } = require("graphql-upload");
+const bodyParser = require("body-parser");
 
 // Construct a schema, using GraphQL schema language
 const typeDefs = gql`
