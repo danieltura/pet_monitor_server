@@ -13,6 +13,7 @@ import bodyParser from "body-parser";
 
 const start = async () => {
   const app = express();
+
   app.get("/", (req, res) => {
     res.send("Wellcome To Pet Monitor Server");
   });
