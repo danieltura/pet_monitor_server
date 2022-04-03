@@ -44,6 +44,7 @@ const typeDefs = gql`
     sensorId: String!
     photoId: String!
     dispensorId: String!
+    url: String
   }
 
   type Status {

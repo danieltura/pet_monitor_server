@@ -122,7 +122,6 @@ export const takePhoto = async (
   { cameraId },
   { dataSources: { cameras } }
 ) => {
-  await cameras.getPhotoUrl();
   return success("Photo Taken");
 };
 

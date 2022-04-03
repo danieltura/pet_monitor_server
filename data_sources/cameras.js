@@ -1,9 +1,5 @@
 import { RESTDataSource } from "apollo-datasource-rest";
 import { ref, getDownloadURL } from "firebase/storage";
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-} from "firebase/auth";
 
 export default class Cameras extends RESTDataSource {
   constructor(baseURL, database, storage, auth) {
@@ -15,9 +11,7 @@ export default class Cameras extends RESTDataSource {
     this.auth = auth;
   }
 
-  async getPhotoUrl(
-    image_name = "image-MxRYfTi3U_5lE6KMfRl_-Myrqr8M_r8_UjweZqbQ.png"
-  ) {
+  async getPhotoUrl(image_name) {
     return getDownloadURL(ref(this.storage, image_name));
   }
 

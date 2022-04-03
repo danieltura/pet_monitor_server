@@ -11,7 +11,7 @@ export const getAllUsers = async (_, __, { dataSources: { users } }) => {
 export const getCameras = async (_, __, { dataSources: { cameras } }) => {
   const res = await cameras.getAllCameras();
   const keys = Object.keys(res);
-  return keys.map((item) => cameraProfile(res[item]));
+  return keys.map((item) => cameraProfile(res[item], cameras));
 };
 
 export const getDispensors = async (_, __, { dataSources: { dispensors } }) => {
